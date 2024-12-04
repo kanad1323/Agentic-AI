@@ -177,16 +177,9 @@ def stream_query_response(query, debug_mode=False):
         yield "I encountered an error processing your request."
 
 # Initialize session state for chat history
+# Initialize session state for chat history
 if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = [{
-        "user": "System",
-        "bot": {
-            "messages": [
-                {"content": "Hello! I'm your assistant. How can I help you today?"}
-            ]
-        }
-    }]
-
+    st.session_state.chat_history = []
 
 # Display chat history
 st.title("LangChain Chatbot with Streamlit Frontend")
