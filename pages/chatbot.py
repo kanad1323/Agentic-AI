@@ -144,7 +144,7 @@ def stream_query_response(query, debug_mode=False):
         previous_messages,
         strategy="last",
         token_counter=model,  # Use the model for token counting
-        max_tokens=10000,  # Adjust this to your context window size
+        max_tokens=100,  # Adjust this to your context window size
         start_on="human",
         end_on=("human", "tool"),
         include_system=True,
@@ -181,6 +181,9 @@ def stream_query_response(query, debug_mode=False):
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
 
+if not st.session_state.chat_history:
+    st.write("No chat history yet. Start the conversation!")
+
 # Display chat history
 st.title("LangChain Chatbot with Streamlit Frontend")
 
@@ -197,12 +200,12 @@ for chat in st.session_state.chat_history:
             st.write(chat['bot'])
 
 # User input
-if user_input := st.chat_input("You:"):  # Chat input replaces text_input + button
-    # Add user message to chat history
+if user_input := st.chat_input("You:"):
+    # Add user input to chat history
     st.session_state.chat_history.append({"user": user_input, "bot": ""})
     latest_index = len(st.session_state.chat_history) - 1
 
-    # Display the user's input
+    # Display user's input
     with st.chat_message("user"):
         st.write(user_input)
 
@@ -210,8 +213,10 @@ if user_input := st.chat_input("You:"):  # Chat input replaces text_input + butt
     with st.chat_message("assistant"):
         response_placeholder = st.empty()
 
-        # Stream the response
-        for response in stream_query_response(user_input, debug_mode=debug_mode):
-            st.session_state.chat_history[latest_index]['bot'] = response
-            # Update the placeholder with the latest response
-            response_placeholder.markdown(response)
+        try:
+            for response in stream_query_response(user_input, debug_mode=debug_mode):
+                st.session_state.chat_history[latest_index]['bot'] = response
+                response_placeholder.markdown(response)
+        except Exception as e:
+            st.error(f"An error occurred: {str(e)}")
+            response_placeholder.markdown("Error processing your request.")
