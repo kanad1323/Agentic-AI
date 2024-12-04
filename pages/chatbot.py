@@ -144,7 +144,7 @@ def stream_query_response(query, debug_mode=False):
         previous_messages,
         strategy="last",
         token_counter=model,  # Use the model for token counting
-        max_tokens=100,  # Adjust this to your context window size
+        max_tokens=10000,  # Adjust this to your context window size
         start_on="human",
         end_on=("human", "tool"),
         include_system=True,
