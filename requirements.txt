@@ -17,6 +17,7 @@ langchain-community
 langchain-groq
 langchain-openai
 langchain_ollama
+langchain-google-genai
 #langgraph-api-inmem
 langgraph
 langgraph-cli
@@ -39,3 +40,4 @@ pypdf
 #chromadb
 #langchain-text-splitters
 streamlit
+streamlit-mermaid
