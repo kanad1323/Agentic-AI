@@ -15,7 +15,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter  # Split tex
 from langchain_huggingface import HuggingFaceEmbeddings  # Hugging Face embeddings for text to vectors
 from langchain_community.vectorstores import FAISS  # FAISS vector store for efficient similarity search
 from langchain.tools.retriever import create_retriever_tool  # Create Langchain tools from retrievers
-from langchain_tavily import TavilySearchResults  # Tavily Search tool for web search
+from langchain_tavily import TavilySearch  # Tavily Search tool for web search
 from langchain_community.retrievers import WikipediaRetriever # Retriever for Wikipedia content
 from langgraph.checkpoint.memory import MemorySaver  # Persist agent states in memory for conversation history
 from langgraph.prebuilt import create_react_agent  # Create ReAct agents
@@ -131,7 +131,7 @@ retriever_tool = create_retriever_tool(
 )
 
 # Internet Search Tool (Tavily)
-internet_search_tool = TavilySearchResults(
+internet_search_tool = TavilySearch(
     max_results=2, # Limit search results to 2.
     search_depth="advanced", # More thorough internet search.
     include_answer=True, # Include direct answer from search results if available.
