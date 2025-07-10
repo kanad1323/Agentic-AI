@@ -5,6 +5,7 @@ import uuid  # Generate unique identifiers
 import logging # Logging events and errors
 from dotenv import load_dotenv  # Load environment variables from .env file
 import requests # For making HTTP requests
+import time # For adding delays
 
 # --- Langchain Framework ---
 from langchain_openai import ChatOpenAI  # OpenAI chat model integration
@@ -219,6 +220,9 @@ def create_github_issue(title, body, tool_calls_comment=None, debug_log_comment=
 
         if issue_number:
             logging.info(f"GitHub issue created: {issue_json.get('html_url')}") # Log issue creation.
+            
+            # Add delay to allow GitHub API to propagate the issue
+            time.sleep(2)
 
             comments_to_add = {
                 "Show Tool Calls": tool_calls_comment, # Tool calls comment.
